@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LojaVirtual.Models
 {
-    internal class Pix : Pagamento
+    public class Pix : Pagamento
     {
         public string IdentificadorTransacao { get; set; } = "";
 
