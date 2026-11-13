@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LojaVirtual.Models
 {
-    internal class Boleto : Pagamento
+    public class Boleto : Pagamento
     {
         public string CodigoBarras { get; set; } = "";
 
