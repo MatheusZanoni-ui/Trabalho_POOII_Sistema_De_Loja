@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LojaVirtual.Models
 {
-    public ab class Item
+    public abstract class Item
     {
         public int Id { get; set; }
 
