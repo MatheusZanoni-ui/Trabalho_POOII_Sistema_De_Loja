@@ -11,7 +11,7 @@ namespace LojaVirtual.Models
         Cancelado
     }
 
-    internal class Pedido
+    public class Pedido
     {
         public int Id { get; set; }
 
