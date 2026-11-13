@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LojaVirtual.Data
 {
-    internal class LojaContext : DBContext
+    internal class LojaContext : DbContext
     {
         public DbSet<Cliente> Clientes => Set<Cliente>();
 
