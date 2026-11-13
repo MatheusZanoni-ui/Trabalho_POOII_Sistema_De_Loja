@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaVirtual.Data
 {
-    internal class LojaContext : DbContext
+    public class LojaContext : DbContext
     {
         public DbSet<Cliente> Clientes => Set<Cliente>();
 
