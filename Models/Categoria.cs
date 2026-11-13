@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LojaVirtual.Models
 {
-    internal class Categoria
+    public class Categoria
     {
         public int Id { get; set; }
 
