@@ -1,12 +1,340 @@
 ﻿<Window x:Class="WpfAppSistemaDeLoja.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfAppSistemaDeLoja"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="LojaVirtual | Gestão" Height="900" Width="1440"
+        MinHeight="760" MinWidth="1180"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F6FA"
+        FontFamily="Segoe UI">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Navy" Color="#17243A"/>
+        <SolidColorBrush x:Key="NavyLight" Color="#243650"/>
+        <SolidColorBrush x:Key="Accent" Color="#4776E6"/>
+        <SolidColorBrush x:Key="TextMain" Color="#1F2937"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#8993A4"/>
+        <SolidColorBrush x:Key="Line" Color="#E9EDF3"/>
 
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#B9C4D4"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="18,13"/>
+            <Setter Property="Margin" Value="0,3,0,3"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="NavBorder" Background="{TemplateBinding Background}" CornerRadius="9" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="#263B59"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="#314D73"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="22"/>
+            <Setter Property="BorderBrush" Value="#E9EDF3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style x:Key="SmallLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#8993A4"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#4776E6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="252"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource Navy}">
+            <DockPanel Margin="20,24,20,20">
+                <StackPanel DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,34">
+                        <Border Width="38" Height="38" CornerRadius="11" Background="#4776E6">
+                            <TextBlock Text="L" Foreground="White" FontSize="22" FontWeight="Bold"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="LojaVirtual" Foreground="White" FontSize="17" FontWeight="Bold"/>
+                            <TextBlock Text="PAINEL DE GESTÃO" Foreground="#91A1B8" FontSize="9" FontWeight="SemiBold" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <TextBlock Text="MENU PRINCIPAL" Foreground="#71829B" FontSize="10"
+                               FontWeight="Bold" Margin="12,0,0,10"/>
+                    <Button x:Name="DashboardButton" Style="{StaticResource NavButton}" Background="#263B59"
+                            Foreground="White" Click="Dashboard_Click">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="▦" Width="28" FontSize="17"/><TextBlock Text="Visão geral"/></StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Click="Navigation_Click" Tag="Produtos">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="▣" Width="28" FontSize="16"/><TextBlock Text="Produtos e serviços"/></StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Click="Navigation_Click" Tag="Categorias">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="▤" Width="28" FontSize="16"/><TextBlock Text="Categorias"/></StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Click="Navigation_Click" Tag="Clientes">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="♙" Width="28" FontSize="18"/><TextBlock Text="Clientes"/></StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Click="Navigation_Click" Tag="Pedidos">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="▧" Width="28" FontSize="16"/><TextBlock Text="Pedidos"/></StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButton}" Click="Navigation_Click" Tag="Pagamentos">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="▱" Width="28" FontSize="17"/><TextBlock Text="Pagamentos"/></StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Border Height="1" Background="#304158" Margin="0,0,0,16"/>
+                    <Button Style="{StaticResource NavButton}" Click="Navigation_Click" Tag="Configurações">
+                        <StackPanel Orientation="Horizontal"><TextBlock Text="⚙" Width="28" FontSize="16"/><TextBlock Text="Configurações"/></StackPanel>
+                    </Button>
+                    <Border Background="#243650" CornerRadius="10" Padding="12" Margin="0,18,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="34" Height="34" CornerRadius="17" Background="#DCE7FF">
+                                <TextBlock Text="AD" Foreground="#315DBB" FontWeight="Bold" FontSize="11"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="Administrador" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
+                                <TextBlock Text="Acesso completo" Foreground="#91A1B8" FontSize="10" Margin="0,3,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Main area -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="76"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="White" BorderBrush="#E9EDF3" BorderThickness="0,0,0,1">
+                <Grid Margin="34,0,36,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock x:Name="BreadcrumbText" Text="PÁGINAS  /  VISÃO GERAL" Foreground="#9AA4B2" FontSize="10" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="PageTitleText" Text="Visão geral" Foreground="#1F2937" FontSize="20" FontWeight="Bold" Margin="0,3,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Background="#F5F7FB" CornerRadius="8" Padding="12,9" Margin="0,0,14,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⌕" FontSize="17" Foreground="#8B96A7" Margin="0,0,8,0"/>
+                                <TextBox Width="175" BorderThickness="0" Background="Transparent" Foreground="#8993A4"
+                                         Text="Buscar..." VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Width="36" Height="36" CornerRadius="18" Background="#F0F4FC">
+                            <TextBlock Text="♧" Foreground="#4776E6" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="DashboardContent" Margin="34,28,36,34">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,22">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Bom dia! 👋" FontSize="25" FontWeight="Bold" Foreground="#1F2937"/>
+                            <TextBlock Text="Aqui está o resumo da sua loja hoje." Foreground="#8993A4" FontSize="13" Margin="0,5,0,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Content="+  Novo pedido" Click="NewOrder_Click" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- KPI cards -->
+                    <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,22">
+                        <Border Style="{StaticResource Card}" Margin="0,0,12,0">
+                            <StackPanel>
+                                <DockPanel><TextBlock Text="VENDAS DO MÊS" Style="{StaticResource SmallLabel}"/>
+                                    <Border Background="#EAF1FF" CornerRadius="7" Padding="8,5" DockPanel.Dock="Right"><TextBlock Text="↗" Foreground="#4776E6"/></Border></DockPanel>
+                                <TextBlock Text="R$ 24.580,00" FontSize="23" FontWeight="Bold" Foreground="#1F2937" Margin="0,15,0,5"/>
+                                <TextBlock Text="↑ 12,8%  em relação ao mês passado" FontSize="10" Foreground="#20A477"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Margin="4,0,8,0">
+                            <StackPanel>
+                                <DockPanel><TextBlock Text="PEDIDOS" Style="{StaticResource SmallLabel}"/>
+                                    <Border Background="#E8F8F2" CornerRadius="7" Padding="8,5" DockPanel.Dock="Right"><TextBlock Text="▧" Foreground="#20A477"/></Border></DockPanel>
+                                <TextBlock Text="186" FontSize="23" FontWeight="Bold" Foreground="#1F2937" Margin="0,15,0,5"/>
+                                <TextBlock Text="↑ 8,2%  em relação ao mês passado" FontSize="10" Foreground="#20A477"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Margin="8,0,4,0">
+                            <StackPanel>
+                                <DockPanel><TextBlock Text="CLIENTES" Style="{StaticResource SmallLabel}"/>
+                                    <Border Background="#FFF4E8" CornerRadius="7" Padding="8,5" DockPanel.Dock="Right"><TextBlock Text="♙" Foreground="#E69A42"/></Border></DockPanel>
+                                <TextBlock Text="1.248" FontSize="23" FontWeight="Bold" Foreground="#1F2937" Margin="0,15,0,5"/>
+                                <TextBlock Text="↑ 4,6%  em relação ao mês passado" FontSize="10" Foreground="#20A477"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Margin="12,0,0,0">
+                            <StackPanel>
+                                <DockPanel><TextBlock Text="TICKET MÉDIO" Style="{StaticResource SmallLabel}"/>
+                                    <Border Background="#F2ECFF" CornerRadius="7" Padding="8,5" DockPanel.Dock="Right"><TextBlock Text="◎" Foreground="#8661D5"/></Border></DockPanel>
+                                <TextBlock Text="R$ 132,15" FontSize="23" FontWeight="Bold" Foreground="#1F2937" Margin="0,15,0,5"/>
+                                <TextBlock Text="↑ 3,1%  em relação ao mês passado" FontSize="10" Foreground="#20A477"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+
+                    <!-- Chart and side panel -->
+                    <Grid Grid.Row="2" Margin="0,0,0,22">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="1.8*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource Card}" Margin="0,0,12,0">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,18">
+                                    <StackPanel><TextBlock Text="Desempenho de vendas" FontSize="15" FontWeight="Bold" Foreground="#1F2937"/>
+                                        <TextBlock Text="Acompanhe o faturamento ao longo do período" FontSize="11" Foreground="#8993A4" Margin="0,4,0,0"/></StackPanel>
+                                    <ComboBox Grid.Column="1" Width="115" Height="30" HorizontalAlignment="Right" SelectedIndex="0">
+                                        <ComboBoxItem Content="Últimos 7 dias"/><ComboBoxItem Content="Este mês"/><ComboBoxItem Content="Este ano"/>
+                                    </ComboBox>
+                                </Grid>
+                                <Grid Height="190">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <Border Grid.Row="0" BorderBrush="#EEF1F5" BorderThickness="0,1,0,0"/>
+                                    <Border Grid.Row="1" BorderBrush="#EEF1F5" BorderThickness="0,1,0,0"/>
+                                    <Border Grid.Row="2" BorderBrush="#EEF1F5" BorderThickness="0,1,0,0"/>
+                                    <Border Grid.Row="3" BorderBrush="#EEF1F5" BorderThickness="0,1,0,0"/>
+                                    <Viewbox Stretch="Fill" Margin="4,5,4,0">
+                                        <Canvas Width="620" Height="180">
+                                            <Polyline Points="0,135 88,112 176,126 264,65 352,86 440,34 528,55 620,12"
+                                                      Stroke="#4776E6" StrokeThickness="3" StrokeLineJoin="Round"/>
+                                            <Polyline Points="0,135 88,112 176,126 264,65 352,86 440,34 528,55 620,12 620,180 0,180"
+                                                      Fill="#244776E6" StrokeThickness="0"/>
+                                            <Ellipse Canvas.Left="612" Canvas.Top="4" Width="12" Height="12" Fill="White" Stroke="#4776E6" StrokeThickness="3"/>
+                                        </Canvas>
+                                    </Viewbox>
+                                </Grid>
+                                <UniformGrid Columns="7" Margin="0,8,0,0">
+                                    <TextBlock Text="Seg" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Ter" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Qua" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Qui" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Sex" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Sáb" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Dom" Style="{StaticResource SmallLabel}" HorizontalAlignment="Center"/>
+                                </UniformGrid>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource Card}" Margin="12,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Resumo de pedidos" FontSize="15" FontWeight="Bold" Foreground="#1F2937"/>
+                                <TextBlock Text="Status dos pedidos neste mês" FontSize="11" Foreground="#8993A4" Margin="0,4,0,20"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                    <Border Width="9" Height="9" CornerRadius="5" Background="#4776E6" Margin="0,3,10,0"/>
+                                    <TextBlock Text="Pagos" Foreground="#596579" FontSize="12"/>
+                                    <TextBlock Text="124" FontWeight="Bold" Foreground="#1F2937" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                                <ProgressBar Value="67" Height="8" Background="#EEF2F8" Foreground="#4776E6" BorderThickness="0"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,18,0,15">
+                                    <Border Width="9" Height="9" CornerRadius="5" Background="#F2B65D" Margin="0,3,10,0"/>
+                                    <TextBlock Text="Em aberto" Foreground="#596579" FontSize="12"/>
+                                    <TextBlock Text="42" FontWeight="Bold" Foreground="#1F2937" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                                <ProgressBar Value="23" Height="8" Background="#EEF2F8" Foreground="#F2B65D" BorderThickness="0"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,18,0,15">
+                                    <Border Width="9" Height="9" CornerRadius="5" Background="#E77979" Margin="0,3,10,0"/>
+                                    <TextBlock Text="Cancelados" Foreground="#596579" FontSize="12"/>
+                                    <TextBlock Text="20" FontWeight="Bold" Foreground="#1F2937" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                                <ProgressBar Value="10" Height="8" Background="#EEF2F8" Foreground="#E77979" BorderThickness="0"/>
+                                <TextBlock Text="Total de 186 pedidos" Foreground="#8993A4" FontSize="10" Margin="0,22,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Recent orders -->
+                    <Border Grid.Row="3" Style="{StaticResource Card}">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,17">
+                                <StackPanel><TextBlock Text="Pedidos recentes" FontSize="15" FontWeight="Bold" Foreground="#1F2937"/>
+                                    <TextBlock Text="Acompanhe as últimas movimentações da loja" FontSize="11" Foreground="#8993A4" Margin="0,4,0,0"/></StackPanel>
+                                <Button Grid.Column="1" Content="Ver todos →" Background="Transparent" BorderThickness="0"
+                                        Foreground="#4776E6" FontWeight="SemiBold" Cursor="Hand" HorizontalAlignment="Right"
+                                        Click="ViewOrders_Click"/>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="1.1*"/><ColumnDefinition Width="2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="PEDIDO" Style="{StaticResource SmallLabel}" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="CLIENTE" Style="{StaticResource SmallLabel}" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="2" Text="DATA" Style="{StaticResource SmallLabel}" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="3" Text="VALOR" Style="{StaticResource SmallLabel}" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="4" Text="STATUS" Style="{StaticResource SmallLabel}" FontWeight="Bold"/>
+                            </Grid>
+                            <Border Height="1" Background="#EEF1F5" Margin="0,12,0,0"/>
+                            <Grid Margin="0,13,0,13">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="1.1*"/><ColumnDefinition Width="2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="#PV-0186" Foreground="#4776E6" FontWeight="SemiBold" FontSize="12"/>
+                                <TextBlock Grid.Column="1" Text="Mariana Oliveira" Foreground="#374151" FontSize="12"/>
+                                <TextBlock Grid.Column="2" Text="18/11/2026" Foreground="#7B8797" FontSize="12"/>
+                                <TextBlock Grid.Column="3" Text="R$ 289,90" Foreground="#374151" FontSize="12" FontWeight="SemiBold"/>
+                                <Border Grid.Column="4" Background="#E8F8F2" CornerRadius="10" Padding="9,4" HorizontalAlignment="Left"><TextBlock Text="Pago" Foreground="#15966B" FontSize="10" FontWeight="SemiBold"/></Border>
+                            </Grid>
+                            <Border Height="1" Background="#EEF1F5"/>
+                            <Grid Margin="0,13,0,13">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="1.1*"/><ColumnDefinition Width="2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="#PV-0185" Foreground="#4776E6" FontWeight="SemiBold" FontSize="12"/>
+                                <TextBlock Grid.Column="1" Text="Rafael Santos" Foreground="#374151" FontSize="12"/>
+                                <TextBlock Grid.Column="2" Text="18/11/2026" Foreground="#7B8797" FontSize="12"/>
+                                <TextBlock Grid.Column="3" Text="R$ 145,00" Foreground="#374151" FontSize="12" FontWeight="SemiBold"/>
+                                <Border Grid.Column="4" Background="#FFF4E5" CornerRadius="10" Padding="9,4" HorizontalAlignment="Left"><TextBlock Text="Em aberto" Foreground="#C5862E" FontSize="10" FontWeight="SemiBold"/></Border>
+                            </Grid>
+                            <Border Height="1" Background="#EEF1F5"/>
+                            <Grid Margin="0,13,0,0">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="1.1*"/><ColumnDefinition Width="2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="#PV-0184" Foreground="#4776E6" FontWeight="SemiBold" FontSize="12"/>
+                                <TextBlock Grid.Column="1" Text="Camila Ferreira" Foreground="#374151" FontSize="12"/>
+                                <TextBlock Grid.Column="2" Text="17/11/2026" Foreground="#7B8797" FontSize="12"/>
+                                <TextBlock Grid.Column="3" Text="R$ 79,90" Foreground="#374151" FontSize="12" FontWeight="SemiBold"/>
+                                <Border Grid.Column="4" Background="#FDECEC" CornerRadius="10" Padding="9,4" HorizontalAlignment="Left"><TextBlock Text="Cancelado" Foreground="#D45E5E" FontSize="10" FontWeight="SemiBold"/></Border>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>
