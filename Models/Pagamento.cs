@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,7 +9,7 @@ namespace LojaVirtual.Models
         void Processar();
     }
 
-    public abstract class Pagamento
+    public abstract class Pagamento : IPagamento
     {
         public int Id { get; set; }
 

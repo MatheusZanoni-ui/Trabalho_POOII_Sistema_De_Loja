@@ -1,4 +1,4 @@
-﻿using LojaVirtual.Models;
+using LojaVirtual.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -25,10 +25,8 @@ namespace LojaVirtual.Data
             DbContextOptionsBuilder options)
         {
             options.UseSqlServer(
-                @"Server=(localdb)\MSSQLLocalDB;
-              Database=LojaVirtualDb;
-              Trusted_Connection=True;
-              TrustServerCertificate=True");
+                Environment.GetEnvironmentVariable("LOJA_CONNECTION_STRING")
+                ?? @"Server=(localdb)\MSSQLLocalDB;Database=LojaVirtualDb;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder mb)
